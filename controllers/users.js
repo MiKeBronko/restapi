@@ -25,3 +25,27 @@ module.exports.createUser = (req, res) => {
     .then((user) => res.send({ data: user }))
     .catch((err) => res.status(500).send({ message: err.message }));
 };
+
+module.exports.updateUser = (req, res) => {
+  const { name, about } = req.body;
+  User.findByIdAndUpdate(req.user._id, { name, about }, { runValidators: true })
+    .then((user) => {
+      if (!user) {
+        return res.staus(404).json({ message: 'нет таких!' });
+      }
+      return res.send(user);
+    })
+    .catch((err) => res.status(500).send({ message: err.message }));
+};
+
+module.exports.updateAva = (req, res) => {
+  const { avatar } = req.body;
+  User.findByIdAndUpdate(req.user._id, { avatar }, { runValidators: true })
+    .then((user) => {
+      if (!user) {
+        return res.staus(404).json({ message: 'упс нет такой персоны!' });
+      }
+      return res.send(user);
+    })
+    .catch((err) => res.status(500).send({ message: err.message }));
+};
