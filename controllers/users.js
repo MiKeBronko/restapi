@@ -31,7 +31,7 @@ module.exports.updateUser = (req, res) => {
   User.findByIdAndUpdate(req.user._id, { name, about }, { runValidators: true })
     .then((user) => {
       if (!user) {
-        return res.staus(404).json({ message: 'нет таких!' });
+        return res.staus(404).json({ message: 'нет таких' });
       }
       return res.send(user);
     })

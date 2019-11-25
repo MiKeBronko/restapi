@@ -21,11 +21,18 @@ module.exports.deleteCard = (req, res) => {
 };
 
 
-module.exports.likeCard = (req, res) => Card.findByIdAndUpdate(
-  req.params.cardId,
-  { $addToSet: { likes: req.user._id } }, // добавить _id в массив, если его там нет
-  { new: true },
-);
+module.exports.likeCard = (req, res) => {
+  console.log(req.params.cardId);
+  Card.findByIdAndUpdate(req.params.cardId)
+    .then((cardId) => {
+      if (!cardId) {
+        return res.status(404).send({ message: 'нет такой карточки'});
+      }
+      return res.send({ $addToSet: { likes: req.user._id } },
+        { new: true });// добавить _id в массив, если его там нет
+    })
+    .catch((err) => res.status(500).send({ message: err.message }));
+};
 
 module.exports.dislikeCard = (req, res) => Card.findByIdAndUpdate(
   req.params.cardId,
