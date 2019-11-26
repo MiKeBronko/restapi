@@ -22,20 +22,27 @@ module.exports.deleteCard = (req, res) => {
 
 
 module.exports.likeCard = (req, res) => {
-  console.log(req.params.cardId);
-  Card.findByIdAndUpdate(req.params.cardId)
-    .then((cardId) => {
-      if (!cardId) {
-        return res.status(404).send({ message: 'нет такой карточки'});
+  Card.findByIdAndUpdate(req.params.cardId, { $addToSet: { likes: req.user._id } }, { new: true })
+    .then((card) => {
+      if (!card) {
+        return res.status(404, 'ooops!').send({ message: 'нет такой карточки' });
       }
-      return res.send({ $addToSet: { likes: req.user._id } },
-        { new: true });// добавить _id в массив, если его там нет
+      return res
+        .status(200)
+        .send({ card });
     })
     .catch((err) => res.status(500).send({ message: err.message }));
 };
 
-module.exports.dislikeCard = (req, res) => Card.findByIdAndUpdate(
-  req.params.cardId,
-  { $pull: { likes: req.user._id } }, // убрать _id из массива
-  { new: true },
-);
+module.exports.dislikeCard = (req, res) => {
+  Card.findByIdAndUpdate(req.params.cardId, { $pull: { likes: req.user._id } }, { new: true })
+    .then((card) => {
+      if (!card) {
+        return res.status(404, 'ooops!').send({ message: 'нет такой карточки' });
+      }
+      return res
+        .status(200)
+        .send({ card });
+    })
+    .catch((err) => res.status(500).send({ message: err.message }));
+};

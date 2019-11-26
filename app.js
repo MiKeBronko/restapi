@@ -2,7 +2,6 @@ const express = require('express');
 
 const app = express();
 const mongoose = require('mongoose');
-// const path = require('path');
 const bodyParser = require('body-parser');
 const users = require('./routes/users');
 const cards = require('./routes/cards');
@@ -23,7 +22,6 @@ app.use((req, res, next) => {
   req.user = {
     _id: '5dd3e0673dd2fc0a70b25c5e',
   };
-  console.log(req.user._id);
   next();
 });
 

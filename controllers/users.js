@@ -7,8 +7,7 @@ module.exports.getUsers = (req, res) => {
 };
 
 module.exports.findUser = (req, res) => {
-  const { userId } = req.params;
-  User.findById(userId)
+  User.findById(req.params.userId)
     .then((user) => {
       if (!user) {
         return res.status(404).send({ message: 'Нет таких!' });
@@ -31,7 +30,7 @@ module.exports.updateUser = (req, res) => {
   User.findByIdAndUpdate(req.user._id, { name, about }, { runValidators: true })
     .then((user) => {
       if (!user) {
-        return res.staus(404).json({ message: 'нет таких' });
+        return res.staus(404).send({ message: 'нет таких' });
       }
       return res.send(user);
     })
@@ -43,7 +42,7 @@ module.exports.updateAva = (req, res) => {
   User.findByIdAndUpdate(req.user._id, { avatar }, { runValidators: true })
     .then((user) => {
       if (!user) {
-        return res.staus(404).json({ message: 'упс нет такой персоны!' });
+        return res.staus(404).send({ message: 'упс нет такой персоны!' });
       }
       return res.send(user);
     })
