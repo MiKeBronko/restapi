@@ -1,6 +1,6 @@
 # sprint13 - rest API & NSQL
 
-## ver 0.0.3
+## ver 0.0.4
 
 ## Инструкция как развернуть проект (local)
 
@@ -17,3 +17,9 @@
 - GET /cards — возвращает все карточки
 - POST /cards — создаёт карточку
 - DELETE /cards/:cardId — удаляет карточку по идентификатору
+
+**ver0.0.4**
+- PATCH /users/me — обновить профиль
+- PATCH /users/me/avatar — обновить аватар
+- PUT /cards/:cardId/likes — поставить лайк карточке
+- DELETE /cards/:cardId/likes — убрать лайк карточке
