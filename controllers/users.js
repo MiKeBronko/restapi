@@ -22,7 +22,13 @@ module.exports.createUser = (req, res) => {
   const { name, about, avatar } = req.body;
   User.create({ name, about, avatar })
     .then((user) => res.send({ data: user }))
-    .catch((err) => res.status(500).send({ message: err.message }));
+    .catch((err) => {
+      if (err.name === 'ValidationError') {
+        res.status(422).send({ message: err.message });
+      } else {
+        res.status(500).json(err);
+      }
+    });
 };
 
 module.exports.updateUser = (req, res) => {
@@ -42,9 +48,14 @@ module.exports.updateAva = (req, res) => {
   User.findByIdAndUpdate(req.user._id, { avatar }, { runValidators: true })
     .then((user) => {
       if (!user) {
-        return res.staus(404).send({ message: 'упс нет такой персоны!' });
+        return res.status(404).json({ message: 'нет таких' });
       }
       return res.send(user);
     })
-    .catch((err) => res.status(500).send({ message: err.message }));
+    .catch((err) => {
+      if (err) {
+        return res.status(404).json({ message: 'please check your avatar link  !' });
+      }
+      res.status(500).json({ message: err.message });
+    });
 };

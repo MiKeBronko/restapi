@@ -20,7 +20,7 @@ mongoose.connect('mongodb://localhost:27017/mestodb', {
 
 app.use((req, res, next) => {
   req.user = {
-    _id: '5dd3e0673dd2fc0a70b25c5e',
+    _id: '5de10d36f89a6b14f87634f0',
   };
   next();
 });
@@ -30,7 +30,7 @@ app.use('/', cards);
 
 const { PORT = 3000 } = process.env;
 
-app.get('/*' || '*', (req, res) => {
+app.use('/*' || '*', (req, res) => {
   res.status(404).send({ message: 'Запрашиваемый ресурс не найден' });
 });
 
