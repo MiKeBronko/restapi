@@ -24,7 +24,7 @@ module.exports.createUser = (req, res) => {
     .then((user) => res.send({ data: user }))
     .catch((err) => {
       if (err.name === 'ValidationError') {
-        res.status(422).send({ message: err.message });
+        res.status(404).send({ message: err.message });
       } else {
         res.status(500).json(err);
       }
@@ -56,6 +56,6 @@ module.exports.updateAva = (req, res) => {
       if (err) {
         return res.status(404).json({ message: 'please check your avatar link  !' });
       }
-      res.status(500).json({ message: err.message });
+      return res.status(500).json({ message: err.message });
     });
 };
