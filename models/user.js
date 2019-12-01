@@ -9,9 +9,9 @@ const userSchema = new mongoose.Schema({
   },
   about: {
     type: String,
-    minlength: [2, 'Username must be at least 2 characters.'],
-    maxlength: [20, 'Username must be less than 20 characters.'],
-    required: [true, 'Your username cannot be blank.'],
+    minlength: 2,
+    maxlength: 30,
+    required: true,
   },
   avatar: {
     type: String,
